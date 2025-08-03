@@ -1,0 +1,41 @@
+<div class="stories row mb-4">
+    <div class="row mb-4">
+        <div class="col-9 h-100 d-flex align-items-center">
+            <h1 class="fw-bold">Lastest story</h1>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-warning text-light rounded-pill w-100">Top Destinations</button>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card w-100" style="width: 18rem;">
+            <div class="img align-center">
+                <img src="images/pic_2.jpg" class="card-img-top b-20" alt="...">
+            </div>
+            <div class="card-body p-0 pt-2">
+                <h5 class="card-title mt-3 fs-2 text-warning fw-bold">Angkor Wat</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus non in
+                    inventore asperiores placeat similique delectus, unde at doloremque fugiat accusantium optio
+                    pariatur minus fuga, nobis veniam necessitatibus eum deleniti?</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        @for(story of stories; track $index) {
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4 square align-center b-20">
+                        <img [src]="story.pic" class="b-20" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title text-warning fw-bold">{{story.title}}</h5>
+                            <p class="card-text">{{story.text}}</p>
+                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<section class="top">
+    <h1 class="fw-bold">Top Destinations</h1>
+    <div class="row mb-4">
+        <div class="col-9 h-100 d-flex align-items-center">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas delectus odio maiores, amet, provident
+                dolores esse commodi assumenda</p>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-warning text-light rounded-pill w-100">Top Destinations</button>
+        </div>
+    </div>
+
+    <div class="top-card d-flex">
+        @for(top of place; track $index){
+        <div class="card" style="width: 18rem;">
+            <div class="img align-center">
+                <img [src]="top.img" class="card-img-top" alt="...">
+            </div>
+            <div class="card-body p-0 pt-2">
+                <h5 class="card-title">{{top.title}}</h5>
+                <p class="card-text">{{top.text}}</p>
+            </div>
+        </div>
+        }
+    </div>
+</section>

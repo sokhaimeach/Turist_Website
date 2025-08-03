@@ -1,0 +1,23 @@
+.align-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card {
+    border: none;
+}
+.img {
+    overflow: hidden;
+}
+.b-20 {
+    border-radius: 20px;
+}
+.square {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    overflow: hidden;
+}
+.square img {
+    height: 180px;
+}
