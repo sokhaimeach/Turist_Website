@@ -34,7 +34,13 @@
 .edit-bio {
     width: 100%;
     height: 30px;
-    background-color: rgba(29, 29, 29, 0.196);
+    border: 2px solid rgb(214, 170, 10);
+    background-color: rgba(216, 195, 40, 0.196);
+}
+.bio-icon {
+    background-color: transparent;
+    border: none;
+    color: rgb(255, 196, 0);
 }
 .card {
     box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.078);

@@ -1,6 +1,6 @@
 <section class="account">
     <div class="cover align-center">
-        <img src="images/pic_1.webp" alt="">
+        <img [src]="user.cover" alt="">
     </div>
 
     <div class="tab row">
@@ -15,53 +15,66 @@
 
     <div class="body row ps-4 pe-4">
         <div class="col-3">
-            <div class="card align-center profile-card" style="height: 450px;">
-                <div class="card align-center" style="border: none;">
-                    <img src="images/pic_3.jpg" class="card-img-top profile" alt="...">
+            <div class="card align-center profile-card" style="height: auto">
+                <div class="card align-center pt-5" style="border: none; box-shadow: none;">
+                    <img [src]="user.profile" class="card-img-top profile" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title fw-bold">Kitty Hida</h5>
-                        <p class="card-text align-center w-100">kity kitty</p>
+                        <h5 class="card-title fw-bold">{{user.name}}</h5>
+                        <p class="card-text align-center w-100">{{user.nickname}}</p>
                     </div>
                 </div>
                 <div class="about ps-3 pe-3 w-100">
                     <div class="input-group">
-                        <span class="input-group-text fw-bold">Bio</span>
-                        <p class="bio ps-3 align-center">Try to be successful</p>
+                        <span class="input-group-text fw-bold bio-icon">Bio</span>
+                        <p class="bio ps-3 align-center pt-3">{{bio}}</p>
                     </div>
-                    <button class="btn edit-bio">Edit bio</button>
+
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            <input type="text" placeholder="Edit bio" [(ngModel)]="get_bio">
+                        </div>
+                    </div>
+                    <button (click)="editBio()" class="btn edit-bio align-center" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
+                        aria-controls="collapseExample">Edit bio</button>
                     <div class="input-group">
-                        <span class="input-group-text fw-bold">Bio</span>
-                        <p class="bio ps-3 align-center">Try to be successful</p>
+                        <span class="input-group-text fw-bold bio-icon">
+                            <i class="bi bi-buildings-fill"></i>
+                        </span>
+                        <p class="bio ps-3 align-center pt-3">{{user.school}}</p>
                     </div>
                     <div class="input-group">
-                        <span class="input-group-text fw-bold">Bio</span>
-                        <p class="bio ps-3 align-center">Try to be successful</p>
+                        <span class="input-group-text fw-bold bio-icon">
+                            <i class="bi bi-heart-fill"></i>
+                        </span>
+                        <p class="bio ps-3 align-center pt-3">{{user.status}}</p>
                     </div>
                     <div class="input-group">
-                        <span class="input-group-text fw-bold">Bio</span>
-                        <p class="bio ps-3 align-center">Try to be successful</p>
+                        <span class="input-group-text fw-bold bio-icon">
+                            <i class="bi bi-person-workspace"></i>
+                        </span>
+                        <p class="bio ps-3 align-center pt-3">{{user.workplace}}</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="col-6 post">
+            @for(po of user.post; track $index) {
             <div class="card mt-3 mb-3">
                 <div class="head d-flex ps-4 pe-4 pt-3">
-                    <img src="images/pic_3.jpg" class="card-img-top sub-profile" alt="...">
+                    <img [src]="user.profile" class="card-img-top sub-profile" alt="...">
                     <div class="text">
-                        <h6 class="name fw-bold">Kitty Hida</h6>
-                        <span style="font-size: 12px;">12day ago</span>
+                        <h6 class="name fw-bold">{{user.name}}</h6>
+                        <span style="font-size: 12px;">{{po.date}}</span>
                     </div>
                     <i class="bi bi-three-dots-vertical position-i"></i>
                 </div>
                 <p class="body-text ps-4 pe-4 pt-2 w-100">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. At deserunt, sequi voluptate nemo
-                    reprehenderit aut, tenetur voluptatum magni, itaque odio officiis. Odio, aliquam. Provident alias
-                    natus, placeat optio velit sit!
+                    {{po.text}}
                 </p>
                 <div class="body-img ps-4 pe-4 mb-4 align-center">
-                    <img src="images/pic_1.webp" alt="">
+                    <img [src]="po.picture" alt="">
                 </div>
                 <div class="footer-card d-flex ps-5 pe-5">
                     <div class="align-center">
@@ -78,74 +91,23 @@
                     </div>
                 </div>
             </div>
-            <div class="card mt-3 mb-3">
-                <div class="head d-flex ps-4 pe-4 pt-3">
-                    <img src="images/pic_3.jpg" class="card-img-top sub-profile" alt="...">
-                    <div class="text">
-                        <h6 class="name fw-bold">Kitty Hida</h6>
-                        <span style="font-size: 12px;">12day ago</span>
-                    </div>
-                    <i class="bi bi-three-dots-vertical position-i"></i>
-                </div>
-                <p class="body-text ps-4 pe-4 pt-2 w-100">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. At deserunt, sequi voluptate nemo
-                    reprehenderit aut, tenetur voluptatum magni, itaque odio officiis. Odio, aliquam. Provident alias
-                    natus, placeat optio velit sit!
-                </p>
-                <div class="body-img ps-4 pe-4 mb-4 align-center">
-                    <img src="images/pic_1.webp" alt="">
-                </div>
-                <div class="footer-card d-flex ps-5 pe-5">
-                    <div class="align-center">
-                        <i class="bi bi-heart"></i>
-                        <span class="ms-2">Love</span>
-                    </div>
-                    <div class="align-center">
-                        <i class="bi bi-chat-dots"></i>
-                        <span class="ms-2">Comment</span>
-                    </div>
-                    <div class="align-center">
-                        <i class="bi bi-reply"></i>
-                        <span class="ms-2">Share</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card mt-3 mb-3">
-                <div class="head d-flex ps-4 pe-4 pt-3">
-                    <img src="images/pic_3.jpg" class="card-img-top sub-profile" alt="...">
-                    <div class="text">
-                        <h6 class="name fw-bold">Kitty Hida</h6>
-                        <span style="font-size: 12px;">12day ago</span>
-                    </div>
-                    <i class="bi bi-three-dots-vertical position-i"></i>
-                </div>
-                <p class="body-text ps-4 pe-4 pt-2 w-100">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. At deserunt, sequi voluptate nemo
-                    reprehenderit aut, tenetur voluptatum magni, itaque odio officiis. Odio, aliquam. Provident alias
-                    natus, placeat optio velit sit!
-                </p>
-                <div class="body-img ps-4 pe-4 mb-4 align-center">
-                    <img src="images/pic_1.webp" alt="">
-                </div>
-                <div class="footer-card d-flex ps-5 pe-5">
-                    <div class="align-center">
-                        <i class="bi bi-heart"></i>
-                        <span class="ms-2">Love</span>
-                    </div>
-                    <div class="align-center">
-                        <i class="bi bi-chat-dots"></i>
-                        <span class="ms-2">Comment</span>
-                    </div>
-                    <div class="align-center">
-                        <i class="bi bi-reply"></i>
-                        <span class="ms-2">Share</span>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
 
-        <div class="col-3">
-
+        <div class="col-3 mt-3">
+            <div class="card p-3">
+                <h1 class="fw-bold text-warning">Feedback</h1>
+                <div class="stars d-flex">
+                    <i class="bi bi-star-fill text-warning me-2"></i>
+                    <i class="bi bi-star-fill text-warning me-2"></i>
+                    <i class="bi bi-star-fill text-warning me-2"></i>
+                    <i class="bi bi-star-fill text-warning me-2"></i>
+                    <i class="bi bi-star-fill text-warning me-2"></i>
+                </div>
+                <p>
+                    {{user.feedback}}
+                </p>
+            </div>
         </div>
     </div>
 </section>
