@@ -6,10 +6,11 @@ import { Stories } from './stories/stories';
 import { Highlight } from './highlight/highlight';
 import { Inspiration } from './inspiration/inspiration';
 import { Footer } from './footer/footer';
+import { Account } from './account/account';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Discover, Top, Stories, Highlight, Inspiration, Footer],
+  imports: [RouterOutlet, Discover, Top, Stories, Highlight, Inspiration, Footer, Account],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
