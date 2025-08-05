@@ -1,6 +1,6 @@
 <section class="account">
     <div class="cover align-center">
-        <img [src]="user.cover" alt="">
+        <img [src]="user?.cover" alt="">
     </div>
 
     <div class="tab row">
@@ -17,10 +17,10 @@
         <div class="col-3">
             <div class="card align-center profile-card" style="height: auto">
                 <div class="card align-center pt-5" style="border: none; box-shadow: none;">
-                    <img [src]="user.profile" class="card-img-top profile" alt="...">
+                    <img [src]="user?.profile" class="card-img-top profile" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title fw-bold">{{user.name}}</h5>
-                        <p class="card-text align-center w-100">{{user.nickname}}</p>
+                        <h5 class="card-title fw-bold">{{user?.name}}</h5>
+                        <p class="card-text align-center w-100">{{user?.nickname}}</p>
                     </div>
                 </div>
                 <div class="about ps-3 pe-3 w-100">
@@ -41,40 +41,40 @@
                         <span class="input-group-text fw-bold bio-icon">
                             <i class="bi bi-buildings-fill"></i>
                         </span>
-                        <p class="bio ps-3 align-center pt-3">{{user.school}}</p>
+                        <p class="bio ps-3 align-center pt-3">{{user?.school}}</p>
                     </div>
                     <div class="input-group">
                         <span class="input-group-text fw-bold bio-icon">
                             <i class="bi bi-heart-fill"></i>
                         </span>
-                        <p class="bio ps-3 align-center pt-3">{{user.status}}</p>
+                        <p class="bio ps-3 align-center pt-3">{{user?.status}}</p>
                     </div>
                     <div class="input-group">
                         <span class="input-group-text fw-bold bio-icon">
                             <i class="bi bi-person-workspace"></i>
                         </span>
-                        <p class="bio ps-3 align-center pt-3">{{user.workplace}}</p>
+                        <p class="bio ps-3 align-center pt-3">{{user?.workplace}}</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="col-6 post">
-            @for(po of user.post; track $index) {
+            @for(po of user?.post; track $index) {
             <div class="card mt-3 mb-3">
                 <div class="head d-flex ps-4 pe-4 pt-3">
-                    <img [src]="user.profile" class="card-img-top sub-profile" alt="...">
+                    <img [src]="user?.profile" class="card-img-top sub-profile" alt="...">
                     <div class="text">
-                        <h6 class="name fw-bold">{{user.name}}</h6>
-                        <span style="font-size: 12px;">{{po.date}}</span>
+                        <h6 class="name fw-bold">{{user?.name}}</h6>
+                        <span style="font-size: 12px;">{{po?.date}}</span>
                     </div>
                     <i class="bi bi-three-dots-vertical position-i"></i>
                 </div>
                 <p class="body-text ps-4 pe-4 pt-2 w-100">
-                    {{po.text}}
+                    {{po?.text}}
                 </p>
                 <div class="body-img ps-4 pe-4 mb-4 align-center">
-                    <img [src]="po.picture" alt="">
+                    <img [src]="po?.picture" alt="">
                 </div>
                 <div class="footer-card d-flex ps-5 pe-5">
                     <div class="align-center">
@@ -105,7 +105,7 @@
                     <i class="bi bi-star-fill text-warning me-2"></i>
                 </div>
                 <p>
-                    {{user.feedback}}
+                    {{user?.feedback}}
                 </p>
             </div>
         </div>
