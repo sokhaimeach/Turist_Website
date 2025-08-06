@@ -1,6 +1,4 @@
-
 <!-- navbar -->
-
 <nav class="navbar navbar-expand-lg fw-bold">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Navbarrrrrrrrrr</a>
@@ -32,7 +30,8 @@
           <input class="form-control rounded-pill b-none fouse-input" type="search" placeholder="Search"
             aria-label="Search" />
         </div>
-        <button class="btn btn-dark rounded-pill" style="width: 90px; padding: 0px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Sign in</button>
+        <button class="btn btn-dark rounded-pill" style="width: 90px; padding: 0px;" data-bs-toggle="modal"
+          data-bs-target="#exampleModal">Sign in</button>
       </div>
       <form class="d-flex" role="search">
       </form>
@@ -53,53 +52,110 @@
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Create account</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <!-- first form -->
-        <form>
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Name</label>
-            <input [(ngModel)]="setUser.name" name="first" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input [(ngModel)]="setUser.password" name="password" type="password" class="form-control" id="exampleInputPassword1">
-          </div>
-
-          <div class="mb3 align-center row">
-            <div class="card border-0 rounded-3">
-              <div class="card-body text-center p-4">
-                <h5 class="card-title mb-3 fw-bold">Upload Your profile Image</h5>
-                <!-- File Input -->
-                <div class="mb-3">
-                  <label class="btn btn-primary px-4 py-2">
-                    <i class="bi bi-upload me-2"></i> Select Image
-                    <input type="file" class="d-none" accept="image/*" (change)="onFileChange($event)" />
-                  </label>
+      <div class="modal-body control-form">
+        <div class="forms d-flex control" [style.transform]="nextform">
+          <!-- first form -->
+          <div class="first-form col-12">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Name</label>
+              <input [(ngModel)]="setUser.name" name="first" [style.border]="bordername" type="text" class="form-control" id="exampleInputEmail1"
+                aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input [(ngModel)]="setUser.password" name="password" [style.border]="borderpass" type="password" class="form-control"
+                id="exampleInputPassword1">
+            </div>
+            <div class="mb3 align-center row">
+              <div class="card border-0 rounded-3">
+                <div class="card-body text-center p-4">
+                  <h5 class="card-title mb-3 fw-bold">Upload Your profile Image</h5>
+                  <!-- File Input -->
+                  <div class="mb-3">
+                    <label class="btn btn-warning px-4 py-2">
+                      <i class="bi bi-upload me-2"></i> Select Image
+                      <input type="file" class="d-none" accept="image/*" (change)="onFileChange($event, 'profile')" />
+                    </label>
+                  </div>
+                  <!-- Selected File Name -->
+                  @if(selectedFileName && setUser.profile) {
+                  <div class="alert alert-light border mt-3">
+                    <strong>Selected File:</strong> {{ setUser.profile }}
+                  </div>
+                  }
                 </div>
-                <!-- Selected File Name -->
-                @if(selectedFileName) {
-                <div class="alert alert-light border mt-3">
-                  <strong>Selected File:</strong> {{ selectedFileName }}
-                </div>
-                }
-                <!-- Image Preview -->
-                @if(previewUrl){
-                <div class="mt-4">
-                  <img [src]="previewUrl" class="img-fluid rounded shadow-sm border" alt="Preview"
-                    style="max-height: 250px;" />
-                </div>
-                }
               </div>
             </div>
           </div>
-        </form>
+          <!-- second form -->
+          <div class="second-form col-12">
+            <div class="mb3 align-center row" style="height: 200px;">
+              <div class="card border-0 rounded-3">
+                <div class="card-body text-center p-4">
+                  <h5 class="card-title mb-3 fw-bold">Upload Your cover Image</h5>
+                  <!-- File Input -->
+                  <div class="mb-3">
+                    <label class="btn btn-warning px-4 py-2">
+                      <i class="bi bi-upload me-2"></i> Select Image
+                      <input type="file" class="d-none" accept="image/*" (change)="onFileChange($event, 'cover')" />
+                    </label>
+                  </div>
+                  <!-- Selected File Name -->
+                  @if(selectedFileName && setUser.cover) {
+                  <div class="alert alert-light border mt-3">
+                    <strong>Selected File:</strong> {{ setUser.cover }}
+                  </div>
+                  }
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Nickname</label>
+              <input [(ngModel)]="setUser.nickname" name="first" type="text" class="form-control"
+                id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Study at school?(Optional)</label>
+              <input [(ngModel)]="setUser.school" name="password" type="text" class="form-control"
+                id="exampleInputPassword1">
+            </div>
+          </div>
+          <!-- third form -->
+          <div class="third-form col-12">
+            <div class="mb-3">
+              <label for="select">Status</label>
+              <select [(ngModel)]="setUser.status" class="form-select" aria-label="Default select example">
+                <option value="Single" selected>Single</option>
+                <option value="Engaged">Engaged</option>
+                <option value="Marrieded">Marrieded</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Work at ? (Optional)</label>
+              <input [(ngModel)]="setUser.workplace" name="password" type="text" class="form-control"
+                id="exampleInputPassword1">
+            </div>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="Save()">Save User</button>
+        @if(nextform == 'translateX(0px)') {
+        <button type="button" class="btn btn-secondary" style="display: none;" (click)="Back()"><i
+            class="bi bi-arrow-left"></i> Back</button>
+        } @else {
+        <button type="button" class="btn btn-secondary" (click)="Back()"><i class="bi bi-arrow-left"></i> Back</button>
+        }
+
+        @if(nextform != 'translateX(-1000px)') {
+        <button type="button" class="btn btn-warning" style="width: 80px;" (click)="Save()">Next <i
+            class="bi bi-arrow-right"></i></button>
+        } @else {
+        <button type="button" class="btn btn-warning" style="width: 80px;" data-bs-dismiss="modal"
+          (click)="Save()">Finish</button>
+        }
       </div>
     </div>
   </div>

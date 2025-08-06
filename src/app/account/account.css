@@ -26,10 +26,14 @@
     top: 200px;
     box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.177);
 }
-.profile {
+.img-profile {
     width: 120px;
     height: 120px;
     border-radius: 50%;
+    overflow: hidden;
+}
+.profile {
+    width: 120px;
 }
 .edit-bio {
     width: 100%;

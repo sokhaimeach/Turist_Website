@@ -17,7 +17,9 @@
         <div class="col-3">
             <div class="card align-center profile-card" style="height: auto">
                 <div class="card align-center pt-5" style="border: none; box-shadow: none;">
-                    <img [src]="user?.profile" class="card-img-top profile" alt="...">
+                    <div class="img-profile align-center">
+                        <img [src]="user?.profile" class="profile" alt="...">
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title fw-bold">{{user?.name}}</h5>
                         <p class="card-text align-center w-100">{{user?.nickname}}</p>

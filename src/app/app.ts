@@ -16,10 +16,13 @@ export class App {
   selectedFileName = '';
   previewUrl: string | null = null;
   storageKey = 'lastImageName';
+  nextform: string = 'translateX(0px)'
+  bordername:string = ''
+  borderpass:string = ''
 
   constructor(private ser: UserService) {}
 
-  onFileChange(event: Event): void {
+  onFileChange(event: Event, con: string): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
 
@@ -30,28 +33,44 @@ export class App {
       return;
     }
 
-    // Save name in component and localStorage
     this.selectedFileName = file.name;
-    // localStorage.setItem(this.storageKey, file.name);
-    this.setUser.profile = 'images/' + file.name;
-
-    // Preview the image
-    // const reader = new FileReader();
-    // reader.onload = () => this.previewUrl = reader.result as string;
-    // reader.readAsDataURL(file);
+    if(con == 'profile') {
+      this.setUser.profile = 'images/' + file.name;
+    }
+    if(con == 'cover') {
+      this.setUser.cover = 'images/' + file.name;
+    }
   }
 
   Save() {
-    this.ser.setUserAccount(this.setUser);
-    alert("user create account successfully");
-    console.log(this.setUser);
+    if(!this.checkForm1()) return;
+    if(this.nextform == 'translateX(0px)') {
+      this.nextform = 'translateX(-500px)';
+    } else if (this.nextform == 'translateX(-500px)') {
+      this.nextform = 'translateX(-1000px)';
+    }else {
+      this.ser.setUserAccount(this.setUser);
+      alert("user create account successfully")
+      console.log(this.setUser);
+      this.nextform = 'translateX(0px)'
+    }
   }
 
-  // ngOnInit(): void {
-  //   // Load saved file name if exists
-  //   const savedName = localStorage.getItem(this.storageKey);
-  //   if (savedName) {
-  //     this.selectedFileName = savedName;
-  //   }
-  // }
+  Back() {
+    if(this.nextform == 'translateX(-500px)'){
+      this.nextform = 'translateX(0px)'
+    } else if (this.nextform == 'translateX(-1000px)') {
+      this.nextform = 'translateX(-500px)'
+    }
+  }
+
+  checkForm1() {
+    let check = false
+    this.bordername = !this.setUser.name ? '1px solid red': '1px solid black'
+    this.borderpass = !this.setUser.password ? '1px solid red': '1px solid black'
+    if(this.setUser.name && this.setUser.password) {
+      check = true
+    }
+    return check
+  }
 }

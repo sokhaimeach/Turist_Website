@@ -13,3 +13,15 @@
 .fouse-input:focus {
     border: 3px solid brown !important;
 }
+.control-form {
+    height: 430px;
+    display: flex;
+    overflow: hidden;
+}
+.control {
+    transition: all 0.3s ease;
+    gap: 31px;
+}
+.control input, .control select {
+    border: 1px solid black;
+}
