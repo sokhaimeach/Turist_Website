@@ -1,5 +1,5 @@
 export interface UserInterface {
-    profile ?: string,
+    profile?: string,
     cover?: string,
     name?: string,
     nickname?: string,
@@ -10,19 +10,19 @@ export interface UserInterface {
     bio?: string,
     feedback?: string,
     star?: 0,
-    post?: [
+    post?: []
+}
+
+export interface PostInterface {
+    date?: string,
+    text?: string,
+    love?: number,
+    picture?: string,
+    comments?: [
         {
-            date: string,
-            text: string,
-            love: number,
-            picture: string,
-            comments: [
-                {
-                    talker: string,
-                    talker_name: string,
-                    comment: string
-                }
-            ]
+            talker: string,
+            talker_name: string,
+            comment: string
         }
     ]
 }

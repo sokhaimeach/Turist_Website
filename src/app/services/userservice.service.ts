@@ -21,4 +21,18 @@ export class UserService {
         }
         return data;
     }
+
+
+    setPosts(user: any) {
+        localStorage.setItem('Posts', JSON.stringify(user));
+    }
+
+    getPosts() {
+        let data;
+        if(typeof localStorage !== 'undefined'){
+
+            data = JSON.parse(localStorage.getItem('Posts') || '[]')
+        }
+        return data;
+    }
 }

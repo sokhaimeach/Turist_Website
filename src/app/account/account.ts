@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { UserInterface } from '../services/interface';
+import { PostInterface, UserInterface } from '../services/interface';
 import { UserService } from '../services/userservice.service';
 
 @Component({
@@ -11,8 +11,9 @@ import { UserService } from '../services/userservice.service';
   styleUrl: './account.css'
 })
 export class Account {
-
+  reversePost: any[] = []
   user: any = {} as UserInterface;
+  post: any = [] as PostInterface;
   get_bio: string = ''
   getFeedback: string = ''
   stars: number = 0
@@ -23,12 +24,17 @@ export class Account {
     'bi bi-star text-warning me-2',
     'bi bi-star text-warning me-2'
   ]
+  selectedFileName: string = ''
+  selectedTextPost: string = ''
 
-  constructor(private ser: UserService) {}
-  
+  constructor(private ser: UserService) { }
+
   ngOnInit() {
     this.user = this.ser.getUserAccount();
-    if(this.user?.star) {
+    this.post = this.ser.getPosts();
+    this.reversePost = this.post?.reverse()
+    this.get_bio = this.user?.bio
+    if (this.user?.star) {
       this.rateStar(this.user?.star)
     }
   }
@@ -39,15 +45,15 @@ export class Account {
     this.get_bio = this.user.bio
   }
 
-  rateStar(rate: number){
+  rateStar(rate: number) {
     this.fill_star = [
-    'bi bi-star text-warning me-2',
-    'bi bi-star text-warning me-2',
-    'bi bi-star text-warning me-2',
-    'bi bi-star text-warning me-2',
-    'bi bi-star text-warning me-2'
-  ]
-    for(let i = 0; i < rate; i++){
+      'bi bi-star text-warning me-2',
+      'bi bi-star text-warning me-2',
+      'bi bi-star text-warning me-2',
+      'bi bi-star text-warning me-2',
+      'bi bi-star text-warning me-2'
+    ]
+    for (let i = 0; i < rate; i++) {
       this.fill_star[i] = 'bi bi-star-fill text-warning me-2'
     }
     this.stars = rate
@@ -57,6 +63,35 @@ export class Account {
     this.user.feedback = this.getFeedback
     this.user.star = this.stars
     this.ser.setUserAccount(this.user)
+  }
+
+  getPhoto(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+
+    const file = input.files[0];
+
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file.');
+      return;
+    }
+
+    this.selectedFileName = 'images/' + file.name;
+  }
+
+  setPost() {
+    const data = {
+        date: new Date().toLocaleString(),
+        text: this.selectedTextPost,
+        love: 0,
+        picture: this.selectedFileName,
+        comments: []
+      }
+
+    this.post.push(data)
+
+    this.ser.setPosts(this.post);
+    alert("post successfully")
   }
 
   tuser: any = {
