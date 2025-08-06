@@ -9,6 +9,7 @@ export interface UserInterface {
     workplace?: string,
     bio?: string,
     feedback?: string,
+    star?: 0,
     post?: [
         {
             date: string,

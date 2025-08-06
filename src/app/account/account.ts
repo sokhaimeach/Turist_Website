@@ -13,18 +13,50 @@ import { UserService } from '../services/userservice.service';
 export class Account {
 
   user: any = {} as UserInterface;
-  bio: string = ''
   get_bio: string = ''
-
-  editBio() {
-    this.bio = this.get_bio == '' ? this.bio : this.get_bio
-    this.get_bio = ''
-  }
+  getFeedback: string = ''
+  stars: number = 0
+  fill_star: any[] = [
+    'bi bi-star text-warning me-2',
+    'bi bi-star text-warning me-2',
+    'bi bi-star text-warning me-2',
+    'bi bi-star text-warning me-2',
+    'bi bi-star text-warning me-2'
+  ]
 
   constructor(private ser: UserService) {}
   
   ngOnInit() {
     this.user = this.ser.getUserAccount();
+    if(this.user?.star) {
+      this.rateStar(this.user?.star)
+    }
+  }
+
+  editBio() {
+    this.user.bio = this.get_bio
+    this.ser.setUserAccount(this.user);
+    this.get_bio = this.user.bio
+  }
+
+  rateStar(rate: number){
+    this.fill_star = [
+    'bi bi-star text-warning me-2',
+    'bi bi-star text-warning me-2',
+    'bi bi-star text-warning me-2',
+    'bi bi-star text-warning me-2',
+    'bi bi-star text-warning me-2'
+  ]
+    for(let i = 0; i < rate; i++){
+      this.fill_star[i] = 'bi bi-star-fill text-warning me-2'
+    }
+    this.stars = rate
+  }
+
+  SendFeedback() {
+    this.user.feedback = this.getFeedback
+    this.user.star = this.stars
+    this.ser.setUserAccount(this.user)
   }
 
   tuser: any = {

@@ -28,7 +28,7 @@
                 <div class="about ps-3 pe-3 w-100">
                     <div class="input-group">
                         <span class="input-group-text fw-bold bio-icon">Bio</span>
-                        <p class="bio ps-3 align-center pt-3">{{bio}}</p>
+                        <p class="bio ps-3 align-center pt-3">{{user?.bio}}</p>
                     </div>
 
                     <div class="collapse" id="collapseExample">
@@ -99,16 +99,29 @@
         <div class="col-3 mt-3">
             <div class="card p-3">
                 <h1 class="fw-bold text-warning">Feedback</h1>
+                @if(this.user?.feedback == '' && this.user?.star == 0){
+                <span>What do you think of over website?</span>
                 <div class="stars d-flex">
-                    <i class="bi bi-star-fill text-warning me-2"></i>
-                    <i class="bi bi-star-fill text-warning me-2"></i>
-                    <i class="bi bi-star-fill text-warning me-2"></i>
-                    <i class="bi bi-star-fill text-warning me-2"></i>
-                    <i class="bi bi-star-fill text-warning me-2"></i>
+                    <i [class]="fill_star[0]" (click)="rateStar(1)"></i>
+                    <i [class]="fill_star[1]" (click)="rateStar(2)"></i>
+                    <i [class]="fill_star[2]" (click)="rateStar(3)"></i>
+                    <i [class]="fill_star[3]" (click)="rateStar(4)"></i>
+                    <i [class]="fill_star[4]" (click)="rateStar(5)"></i>
                 </div>
-                <p>
-                    {{user?.feedback}}
-                </p>
+                <span>Do you have any thoughts you'd like to share?</span>
+                <textarea [(ngModel)]="getFeedback" class="form-control" style="border: 2px solid orange;"
+                    rows="3"></textarea>
+                <button class="btn btn-warning mt-3" (click)="SendFeedback()">Send</button>
+                } @else {
+                <div class="stars d-flex">
+                    <i [class]="fill_star[0]"></i>
+                    <i [class]="fill_star[1]"></i>
+                    <i [class]="fill_star[2]"></i>
+                    <i [class]="fill_star[3]"></i>
+                    <i [class]="fill_star[4]"></i>
+                </div>
+                <p>{{user?.feedback}}</p>
+                }
             </div>
         </div>
     </div>
