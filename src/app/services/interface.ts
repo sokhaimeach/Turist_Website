@@ -14,15 +14,14 @@ export interface UserInterface {
 }
 
 export interface PostInterface {
+    username?: string,
+    userpic?: string,
     date?: string,
     text?: string,
-    love?: number,
     picture?: string,
-    comments?: [
-        {
-            talker: string,
-            talker_name: string,
-            comment: string
-        }
-    ]
+    lover?: [],
+    talker?: string,
+    talker_name?: string,
+    comment?: string,
+    shareby?: []
 }

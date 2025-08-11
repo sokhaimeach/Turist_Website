@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PostInterface, UserInterface } from '../services/interface';
 import { UserService } from '../services/userservice.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-account',
@@ -12,6 +13,7 @@ import { UserService } from '../services/userservice.service';
 })
 export class Account {
   reversePost: any[] = []
+  arr: any[] = []
   user: any = {} as UserInterface;
   post: any = [] as PostInterface;
   get_bio: string = ''
@@ -24,16 +26,55 @@ export class Account {
     'bi bi-star text-warning me-2',
     'bi bi-star text-warning me-2'
   ]
+  displayProgress: string = 'none'
   selectedFileName: string = ''
   selectedTextPost: string = ''
+  isUpdate: boolean = false
+  updateTime: string = ''
 
-  constructor(private ser: UserService) { }
+  noteUser: any = {}
+
+  heart: string[] = []
+  fillHeart: string[] = []
+
+  constructor(private ser: UserService, private ro: ActivatedRoute) { }
 
   ngOnInit() {
-    this.user = this.ser.getUserAccount();
+    this.ro.queryParams.subscribe(params => this.noteUser = params)
+    this.refresh()
+  }
+
+  refresh() {
+    const allUser = this.ser.getUserAccount()
+    if(Array.isArray(allUser)){
+      allUser.forEach(u => {
+        if(this.noteUser.name == u.name && this.noteUser.pass == u.password){
+          this.user = u
+          this.get_bio = this.user?.bio
+        }
+      })
+    }
     this.post = this.ser.getPosts();
-    this.reversePost = this.post?.reverse()
-    this.get_bio = this.user?.bio
+    if (this.post && Array.isArray(this.post)) {
+      let count = 0
+      for(let i = 0; i < this.post.length; i++){
+        if(this.post[i].username == this.user?.name){
+          this.arr[count] = this.post[i]
+          if(this.arr[count]?.lover[0]==this.user?.name){
+            this.heart.push('bi bi-heart-fill')
+            this.fillHeart.push('red')
+          } else {
+            this.heart.push('bi bi-heart')
+            this.fillHeart.push('black')
+          }
+          count++
+        }
+      }
+      console.log(this.fillHeart)
+    }
+    this.reversePost = this.arr.reverse()
+    this.heart.reverse()
+    this.fillHeart.reverse()
     if (this.user?.star) {
       this.rateStar(this.user?.star)
     }
@@ -41,6 +82,7 @@ export class Account {
 
   editBio() {
     this.user.bio = this.get_bio
+    console.log(this.user)
     this.ser.setUserAccount(this.user);
     this.get_bio = this.user.bio
   }
@@ -79,85 +121,95 @@ export class Account {
     this.selectedFileName = 'images/' + file.name;
   }
 
+  isPost() {
+    this.isUpdate = false
+    this.selectedTextPost = ''
+    this.selectedFileName = ''
+  }
+
   setPost() {
     const data = {
-        date: new Date().toLocaleString(),
-        text: this.selectedTextPost,
-        love: 0,
-        picture: this.selectedFileName,
-        comments: []
-      }
+      username: this.user?.name,
+      userpic: this.user?.profile,
+      date: new Date().toLocaleString(),
+      text: this.selectedTextPost,
+      lover: [],
+      picture: this.selectedFileName,
+      comments: []
+    }
 
     this.post.push(data)
 
     this.ser.setPosts(this.post);
-    alert("post successfully")
+    this.displayProgress = 'flex'
+    this.refresh()
   }
 
-  tuser: any = {
-    profile: 'images/profile.jpg',
-    cover: 'images/cover.jpg',
-    name: 'Meach Sokhai',
-    nickname: '@sokhai',
-    password: '1234',
-    school: 'Setec institute',
-    status: 'Single',
-    workplace: 'Work from home',
-    bio: 'Try to be success',
-    feedback: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente maxime, consectetur doloribus numquam, dolore, itaque quos totam rerum necessitatibus voluptas iusto at amet. Aliquid reiciendis, ipsum culpa laboriosam deserunt excepturi? ',
-    post: [
-      {
-        date: '12 day ago',
-        text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At deserunt, sequi voluptate nemo reprehenderit aut, tenetur voluptatum magni, itaque odio officiis. Odio, aliquam. Provident alias natus, placeat optio velit sit! ',
-        love: '',
-        picture: 'images/cover.jpg',
-        comments: [
-          {
-            talker: '',
-            talker_name: '',
-            comment: ''
+  deletePost(dateTime: string) {
+    let arr = []
+    if (Array.isArray(this.post)) {
+      arr = this.post.filter((arr) => arr.date !== dateTime)
+    }
+    this.ser.setPosts(arr)
+    this.displayProgress = 'flex'
+    this.refresh()
+  }
+
+  transferToControl(dateTime: string) {
+    this.isUpdate = true
+    this.updateTime = dateTime
+    if (Array.isArray(this.post)) {
+      this.post.map((po) => {
+        if (dateTime == po.date) {
+          this.selectedTextPost = po.text
+          this.selectedFileName = po.picture
+        }
+      })
+    }
+  }
+
+  updatePost(time: string) {
+    if (Array.isArray(this.post)) {
+      this.post.forEach((po) => {
+        if (time == po.date) {
+          po.text = this.selectedTextPost
+          po.picture = this.selectedFileName
+        }
+      })
+    }
+    this.ser.setPosts(this.post)
+    this.displayProgress = 'flex'
+  }
+
+  likePost(event: Event, dates: string) {
+    const like = event.target as HTMLElement
+    
+    like.style.color = like.style.color=='black'? 'red': 'black'
+    if(like.classList.contains('bi-heart')){
+      like.classList.remove('bi-heart')
+      like.classList.add('bi-heart-fill')
+      if(Array.isArray(this.post)){
+        for(let i = 0; i< this.post.length; i++){
+          if(this.post[i].date == dates){
+            this.post[i].lover.push(this.user?.name)
+            console.log(this.post[i])
           }
-        ]
-      },
-      {
-        date: '12 day ago',
-        text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At deserunt, sequi voluptate nemo reprehenderit aut, tenetur voluptatum magni, itaque odio officiis. Odio, aliquam. Provident alias natus, placeat optio velit sit! ',
-        love: '',
-        picture: 'images/pic_3.jpg',
-        comments: [
-          {
-            talker: '',
-            talker_name: '',
-            comment: ''
+        }
+      }
+    } else {
+      like.classList.add('bi-heart')
+      like.classList.remove('bi-heart-fill')
+      if(Array.isArray(this.post)){
+        for(let i = 0; i< this.post.length; i++){
+          if(this.post[i].date == dates){
+            this.post[i].lover.pop()
+            console.log(this.post[i])
           }
-        ]
-      },
-      {
-        date: '12 day ago',
-        text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At deserunt, sequi voluptate nemo reprehenderit aut, tenetur voluptatum magni, itaque odio officiis. Odio, aliquam. Provident alias natus, placeat optio velit sit! ',
-        love: '',
-        picture: 'images/pic_2.jpg',
-        comments: [
-          {
-            talker: '',
-            talker_name: '',
-            comment: ''
-          }
-        ]
-      },
-      {
-        date: '12 day ago',
-        text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. At deserunt, sequi voluptate nemo reprehenderit aut, tenetur voluptatum magni, itaque odio officiis. Odio, aliquam. Provident alias natus, placeat optio velit sit! ',
-        love: '',
-        picture: 'images/profile.jpg',
-        comments: [
-          {
-            talker: '',
-            talker_name: '',
-            comment: ''
-          }
-        ]
-      },
-    ]
+        }
+      }
+    }
+
+    this.ser.setPosts(this.post)
+    this.refresh()
   }
 }

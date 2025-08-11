@@ -62,7 +62,7 @@
 
             <!-- Button trigger modal -->
             <button style="margin-top: 350px; width: 95%;" type="button" class="btn btn-warning" data-bs-toggle="modal"
-                data-bs-target="#exampleModal">
+                data-bs-target="#exampleModal" (click)="isPost()">
                 Post
                 <i class="bi bi-plus-circle"></i>
             </button>
@@ -78,7 +78,8 @@
                         </div>
                         <div class="modal-body" style="height: 450px;">
                             <span>Write your content</span>
-                            <textarea [(ngModel)]="selectedTextPost" class="form-control mt-2" style="border: 2px solid orange;" rows="3"></textarea>
+                            <textarea [(ngModel)]="selectedTextPost" class="form-control mt-2"
+                                style="border: 2px solid orange;" rows="3"></textarea>
 
                             <div class="mb-3 mt-3">
                                 <label class="btn"
@@ -94,8 +95,13 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" (click)="setPost()">Save changes</button>
+                            @if(!isUpdate) {
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal"
+                                (click)="setPost()">Post</button>
+                            } @else {
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal"
+                                (click)="updatePost(updateTime)">Update</button>
+                            }
                         </div>
                     </div>
                 </div>
@@ -106,12 +112,24 @@
             @for(po of reversePost; track $index) {
             <div class="card mt-3 mb-3">
                 <div class="head d-flex ps-4 pe-4 pt-3">
-                    <img [src]="user?.profile" class="card-img-top sub-profile" alt="...">
+                    <div class="sub-profile align-center">
+                        <img [src]="po?.userpic" class="" alt="...">
+                    </div>
                     <div class="text">
-                        <h6 class="name fw-bold">{{user?.name}}</h6>
+                        <h6 class="name fw-bold">{{po?.username}}</h6>
                         <span style="font-size: 12px;">{{po?.date}}</span>
                     </div>
-                    <i class="bi bi-three-dots-vertical position-i"></i>
+                    <div class="btn-group dropend position-i">
+                        <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                        <ul class="dropdown-menu" style="line-height: 30px;">
+                            <!-- Dropdown menu links -->
+                            <li class="fw-bold ms-2 fs-6" style="cursor: pointer;" (click)="deletePost(po?.date)"><i
+                                    class="me-2 bi bi-backspace-reverse"></i> Delete</li>
+                            <li class="fw-bold ms-2 fs-6" style="cursor: pointer;" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" (click)="transferToControl(po?.date)"><i
+                                    class="me-2 bi bi-arrow-clockwise"></i> Update</li>
+                        </ul>
+                    </div>
                 </div>
                 <p class="body-text ps-4 pe-4 pt-2 w-100">
                     {{po?.text}}
@@ -120,13 +138,15 @@
                     <img [src]="po?.picture" alt="">
                 </div>
                 <div class="footer-card d-flex ps-5 pe-5">
-                    <div class="align-center">
-                        <i class="bi bi-heart"></i>
+                    <div class="align-center" style="position: relative;">
+                        <i [class]="heart[$index]" (click)="likePost($event,po?.date)" [style.color]="fillHeart[$index]"></i>
                         <span class="ms-2">Love</span>
+                        <span style="position: absolute; left: 65px; color: black;">1</span>
                     </div>
-                    <div class="align-center">
+                    <div class="align-center" style="position: relative;">
                         <i class="bi bi-chat-dots"></i>
                         <span class="ms-2">Comment</span>
+                        <span style="position: absolute; left: 100px;">1</span>
                     </div>
                     <div class="align-center">
                         <i class="bi bi-reply"></i>
@@ -141,7 +161,7 @@
             <div class="card p-3">
                 <h1 class="fw-bold text-warning">Feedback</h1>
                 @if(this.user?.feedback == '' && this.user?.star == 0){
-                <span>What do you think of over website?</span>
+                <span>What do you think of our website?</span>
                 <div class="stars d-flex">
                     <i [class]="fill_star[0]" (click)="rateStar(1)"></i>
                     <i [class]="fill_star[1]" (click)="rateStar(2)"></i>
@@ -167,3 +187,35 @@
         </div>
     </div>
 </section>
+
+
+
+
+
+
+
+
+
+
+
+<!-- From Uiverse.io by ZstarPanda0210 -->
+
+<div class="cardss" [style.display]="displayProgress">
+    <div class="header">
+        <div class="image">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+                <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" stroke="#000000"
+                        d="M20 7L9.00004 18L3.99994 13"></path>
+                </g>
+            </svg>
+        </div>
+        <div class="content">
+            <span class="title">Complite process</span>
+            <p class="message">Thank you for your purchase. you package will be delivered within 2 days of your purchase
+            </p>
+        </div>
+    </div>
+</div>

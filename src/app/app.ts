@@ -3,6 +3,7 @@ import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { UserInterface } from './services/interface';
 import { UserService } from './services/userservice.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,10 @@ export class App {
   bordername:string = ''
   borderpass:string = ''
 
-  constructor(private ser: UserService) {}
+  loginName: string = ''
+  loginPassword: string = ''
+
+  constructor(private ser: UserService, private route: Router) {}
 
   onFileChange(event: Event, con: string): void {
     const input = event.target as HTMLInputElement;
@@ -49,6 +53,8 @@ export class App {
     } else if (this.nextform == 'translateX(-500px)') {
       this.nextform = 'translateX(-1000px)';
     }else {
+      this.setUser.star = 0
+      this.setUser.feedback = ''
       this.ser.setUserAccount(this.setUser);
       alert("user create account successfully")
       console.log(this.setUser);
@@ -72,5 +78,18 @@ export class App {
       check = true
     }
     return check
+  }
+
+  logIn() {
+    const alluser = this.ser.getUserAccount();
+    if(Array.isArray(alluser)){
+      alluser.forEach(user => {
+        if(this.loginName == user?.name && this.loginPassword == user?.password){
+          this.route.navigate(['/profile'], {queryParams: {name: this.loginName, pass: this.loginPassword}})
+        }
+      })
+    }
+    this.loginName = ''
+    this.loginPassword = ''
   }
 }

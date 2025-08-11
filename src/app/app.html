@@ -31,7 +31,9 @@
             aria-label="Search" />
         </div>
         <button class="btn btn-dark rounded-pill" style="width: 90px; padding: 0px;" data-bs-toggle="modal"
-          data-bs-target="#exampleModal">Sign in</button>
+          data-bs-target="#exampleModal">Sign up</button>
+        <button class="btn btn-dark rounded-pill ms-2" style="width: 90px; padding: 0px;" data-bs-toggle="modal"
+          data-bs-target="#loginModal">Login</button>
       </div>
       <form class="d-flex" role="search">
       </form>
@@ -44,10 +46,8 @@
 
 <router-outlet />
 
-<a routerLink="/profile" class="btn btn-Primary">Profile</a>
 
-
-<!-- sign in form -->
+<!-- sign up form -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
@@ -61,13 +61,13 @@
           <div class="first-form col-12">
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Name</label>
-              <input [(ngModel)]="setUser.name" name="first" [style.border]="bordername" type="text" class="form-control" id="exampleInputEmail1"
-                aria-describedby="emailHelp">
+              <input [(ngModel)]="setUser.name" name="first" [style.border]="bordername" type="text"
+                class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
               <label for="exampleInputPassword1" class="form-label">Password</label>
-              <input [(ngModel)]="setUser.password" name="password" [style.border]="borderpass" type="password" class="form-control"
-                id="exampleInputPassword1">
+              <input [(ngModel)]="setUser.password" name="password" [style.border]="borderpass" type="password"
+                class="form-control" id="exampleInputPassword1">
             </div>
             <div class="mb3 align-center row">
               <div class="card border-0 rounded-3">
@@ -156,6 +156,38 @@
         <button type="button" class="btn btn-warning" style="width: 80px;" data-bs-dismiss="modal"
           (click)="Save()">Finish</button>
         }
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- login form -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Create account</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body control-form">
+        <!-- login form -->
+        <div class="first-form col-12">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Name</label>
+            <input [(ngModel)]="loginName" name="loginname" [style.border]="bordername" type="text" class="form-control"
+              id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input [(ngModel)]="loginPassword" name="loginpassword" [style.border]="borderpass" type="password"
+              class="form-control" id="exampleInputPassword1">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" style="width: 80px;" data-bs-dismiss="modal"
+          (click)="logIn()">Login</button>
       </div>
     </div>
   </div>
